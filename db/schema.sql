@@ -5,8 +5,9 @@ USE mycompanyDb;
 
 
 CREATE TABLE department (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(30) NOT NULL
+      id INT NOT NULL AUTO_INCREMENT,
+    department VARCHAR(30),
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE roles (

@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const inquirer = require("inquirer");
 
 // create the connection information for the sql database
@@ -21,60 +21,119 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
-// const mainMenu = () => {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "question",
-//         message: "What would you like to do?",
-//         choices: [
-//           "Examine Departments",
-//           "Examine Roles",
-//           "Examine Employees",
-//           "Add Department",
-//           "Add Role",
-//           "Add Employee",
-//           "Update Employees",
-//         ],
-//       },
+const mainMenu = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "question",
+        message: "What would you like to do?",
+        choices: [
+          "Show Departments",
+          "Show Roles",
+          "Show Employees",
+          "Add Department",
+          "Add Roles",
+          "Add Employee",
+          "Update Employees",
+        ],
+      },
+    ])
+    .then((answer) => {
+      if (answer.question === "Add Department") {
+        addDepartment();
+      } else if (answer.question === "Add Employees") {
+        employeeQuestions();
+      } else if (answer.question === "Add Roles") {
+        rolesQuestions();
+      } else if (answer.question === "Add Department") {
+        rolesQuestions();
+      } else if (answer.question === "Show Departments") {
+        showDepartments();
+      } else if (answer.question === "Show Roles=s") {
+        showroless();
+      } else if (answer.question === "Show Employees") {
+        showEmployees();
+      } else if (answer.question === "Update Employee roles") {
+        updateEmployeeroless();
+      } else {
+        connection.end();
+      }
+    });
+};
+
+ShowEmployees = () => {
+  const query = `SELECT employees.role_id, employees.first_name, employees.last_name, roles.title, department.department AS department
+    FROM employees
+    LEFT JOIN roles ON employees.role_id = roles.id  
+    LEFT JOIN department ON roles.department_id = department.id
+    `;
+  connection.query(query, (err, data) => {
+    if (err) throw err;
+    console.log("\n");
+    console.log("VIEW ALL EMPLOYEES");
+    console.log("\n");
+    console.table(data);
+    console.log("\n");
+    inquirerPrompt();
+  });
+};
+
+ShowDepartments = () => {
+  const query = `SELECT * FROM department`;
+  connection.query(query, (err, data) => {
+    if (err) throw err;
+    console.log("\n");
+    console.log("VIEW DEPARTMENTS");
+    console.log("\n");
+    console.table(data);
+    console.log("\n");
+    mainMenu();
+  });
+};
+viewRoles = () => {
+  const query = `SELECT * FROM role
+    LEFT JOIN department ON role.department_id = department.id`;
+  connection.query(query, (err, data) => {
+    if (err) throw err;
+    console.log("\n");
+    console.log("VIEW ROLES");
+    console.log("\n");
+    console.table(data);
+    console.log("\n");
+    inquirerPrompt();
+  });
+};
+// function ShowEmployees() {
+//   const query = `SELECT employees.id, employees.first_name, employees.last_name, roles.title, department.department AS department
+//     FROM employees
+//     LEFT JOIN roles ON employees.roles_id = roles.id
+//     LEFT JOIN department ON roles.department_id = department.id
+//     `;
+//   connection.query(query, (err, data) => {
+//     if (err) throw err;
+//     console.log("\n");
+//     console.log("VIEW ALL EMPLOYEES");
+//     console.log("\n");
+//     console.table(data);
+//     console.log("\n");
+//     mainMenu();
+//   });
+// }
+
+// const addDepartment= ()=> {
+//     inquirer.prompt([
+//         {
+//             type: 'input',
+//             name: "deparment",
+//             message: "Enter the name of the daparment you want to add"
+
+//         }
 //     ])
-//     .then((answer) => {
-//       if (answer.question === "Add Department") {
-//         addDepartment();
-//       } else if (answer.question === "Add Employees") {
-//         employeeQuestions();
-//       } else if (answer.question === "Add Role") {
-//         roleQuestions();
-//       } else if (answer.question === "Add Department") {
-//         roleQuestions();
-//       } else if (answer.question === "Examine Departments") {
-//         ExamineDepartments();
-//       } else if (answer.question === "Examine Roles") {
-//         ExamineRoles();
-//       } else if (answer.question === "Examine Employees") {
-//         ExamineEmployees1();
-//       } else if (answer.question === "Update Employee Role") {
-//         updateEmployeeRoles();
-//       } else {
-//         connection.end();
-//       }
-//     });
-// };
+//     .then(answers=> {
+//         const deptQuerry= INSERT INTO deparment (deparment)VALUES(`${answers.deparment}`))
+//     }
 
-// // const addDepartment= ()=> {
-// //     inquirer.prompt([
-// //         {
-// //             type: 'input',
-// //             name: "deparment",
-// //             message: "Enter the name of the daparment you want to add"
+// }
 
-// //         }
-// //     ])
-// //     .then(answers=> {
-// //         const deptQuerry= INSERT INTO deparment (deparment)VALUES(`${answers.deparment}`))
-// //     }
-
-// // }
-
-// // mainMenu();
+mainMenu();
