@@ -42,22 +42,22 @@ const mainMenu = () => {
         ],
       },
     ])
-    .then((answer) => {
-      if (answer.question === "Add Department") {
+    .then((res) => {
+      if (res.question === "Add Department") {
         addDepartment();
-      } else if (answer.question === "Add Employee") {
+      } else if (res.question === "Add Employee") {
         employeeQuestions();
-      } else if (answer.question === "Add Roles") {
+      } else if (res.question === "Add Roles") {
         rolesQuestions();
-      } else if (answer.question === "Add Department") {
+      } else if (res.question === "Add Department") {
         rolesQuestions();
-      } else if (answer.question === "Show Departments") {
+      } else if (res.question === "Show Departments") {
         showDepartments();
-      } else if (answer.question === "Show Roles") {
+      } else if (res.question === "Show Roles") {
         showRoles();
-      } else if (answer.question === "Show Employees") {
+      } else if (res.question === "Show Employees") {
         showEmployees();
-      } else if (answer.question === "Update Employees roles") {
+      } else if (res.question === "Update Employees roles") {
         updateEmployeeroless();
       } else {
         connection.end();
@@ -226,16 +226,16 @@ employeeQuestions = () => {
         choices: rChoices,
       },
     ])
-    .then(function (answer) {
+    .then(function (res, roleChoices) {
       connection.query(
         "INSERT INTO employees SET ?",
         {
-          first_name: answer.firstname,
-          last_name: answer.lastname,
-          role_id: 1,
-          manager_id: 1,
+          first_name: res.firstname,
+          last_name: res.lastname,
+          role_id: res.id[0],
+          manager_id: null,
         },
-        function (err, answer) {
+        function (err, res) {
           if (err) {
             throw err;
           }
@@ -275,8 +275,8 @@ const updateEmployeeroless = () => {
             choices: ["Change title", "testing"],
           },
         ])
-        .then((answer) => {
-          changeTitle(answer.choices);
+        .then((res) => {
+          changeTitle(res.choices);
         });
     }
   );
@@ -296,10 +296,10 @@ const changeTitle = (employeeId) => {
         "6-Accountant Manager",
       ],
     })
-    .then((answer) => {
+    .then((res) => {
       connection.query(
         "UPDATE employees SET title_id=? WHERE id=?",
-        [answer.newTitle.split("-")[0], employeesId],
+        [res.newTitle.split("-")[0], employees_Id],
         (err, results) => {
           if (err) {
             console.log(err);
