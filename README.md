@@ -2,8 +2,8 @@
 Command line application for managing employees  
 
 ---
-## Table of Contents
-
+## 
+![image](https://user-images.githubusercontent.com/90347622/169601510-db831d26-e43d-45a8-aa67-772980bc6615.png)
 
 
 
@@ -14,7 +14,7 @@ Command line application for managing employees
 ## Features
 - **Add, remove, and update** - *Add, remove, or update employees, roles, and  departments.*
 - **View employees** - *View employees collectively, by manager, or by department*
-- **View the total utilized budget** - *When viewing employees by department, you can see the total utilized budget at the bottom of the table*
+
 
 
 ---
