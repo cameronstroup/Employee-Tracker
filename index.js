@@ -302,7 +302,7 @@ const changeTitle = (res) => {
     })
     .then((res) => {
       newV = res.newTitle.split("-")[0];
-      id = res.newTitle.slice(-1);
+      id = res.newTitle.slice(-2);
       console.log(id, res, newV);
       connection.query(
         `UPDATE employees SET role_id=${newV}
