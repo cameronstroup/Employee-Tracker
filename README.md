@@ -2,8 +2,8 @@
 Command line application for managing employees  
 
 # Technologies Used
-- **Node
-- **Mysql
+- Node
+- Mysql
 
 
 ---
