@@ -1,6 +1,11 @@
 # Description
 Command line application for managing employees  
 
+# Technologies Used
+** Node
+** Mysql
+
+
 ---
 ## 
 ![image](https://user-images.githubusercontent.com/90347622/169601510-db831d26-e43d-45a8-aa67-772980bc6615.png)
