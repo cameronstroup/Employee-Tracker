@@ -31,6 +31,5 @@ This project is not currently seeking contributions
 - [File an issue](https://github.com/jscottrumptz/employee-tracker/issues/new/?target=_blank)
 
 Also, feel free to contact me directly with questions or feedback about the project
-- GitHub Username: camerondstroup@github.com
-- 
+- GitHub Username: camerondstroup
 - Email:cameron.d.stroup@gmail.com
