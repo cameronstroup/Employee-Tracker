@@ -190,12 +190,12 @@ rolesQuestions = () => {
 };
 employeeQuestions = () => {
   let rChoices = [
-    "Sales Person",
-    "Sales Manger",
-    "Software Engineer",
-    "Head Software Engineer",
-    "Accountant",
-    "Accountant Manager",
+    "1-Sales Person",
+    "2-Sales Manger",
+    "3-Software Engineer",
+    "4-Head Software Engineer",
+    "5-Accountant",
+    "6-Accountant Manager",
   ];
 
   let query = `SELECT * FROM roles`;
@@ -232,7 +232,8 @@ employeeQuestions = () => {
         {
           first_name: res.firstname,
           last_name: res.lastname,
-          role_id: res.id[0],
+
+          role_id: [res.role.split("-")[0]],
           manager_id: null,
         },
         function (err, res) {
@@ -242,6 +243,7 @@ employeeQuestions = () => {
         }
       );
       console.log("Employee added !");
+      console.log(res.id);
       mainMenu();
     });
 };
@@ -272,37 +274,42 @@ const updateEmployeeroless = () => {
             name: "update",
             type: "list",
             message: "What do you need to update?",
-            choices: ["Change title", "testing"],
+            choices: ["Change title"],
           },
         ])
         .then((res) => {
-          changeTitle(res.choices);
+          console.log(res);
+          changeTitle(res);
         });
     }
   );
 };
-const changeTitle = (employeeId) => {
+const changeTitle = (res) => {
+  num = res.choice;
   inquirer
     .prompt({
       name: "newTitle",
       type: "list",
       message: "Title: ",
       choices: [
-        "1-Sales person.",
-        "2-Sales Manager",
-        "3-Software Engineer",
-        "4-Head Software Engineer",
-        "5-Acountant",
-        "6-Accountant Manager",
+        `1-Sales person for employee ID  ${num}`,
+        `2-Sales Manager for employee ID  ${num}`,
+        `3-Software Engineer for employee ID  ${num}`,
+        `4-Head Software Engineer for employee ID  ${num}`,
+        `5-Acountant for employee ID  ${num}`,
+        `6-Accountant Manager for employee ID  ${num}`,
       ],
     })
     .then((res) => {
+      newV = res.newTitle.split("-")[0];
+      id = res.newTitle.slice(-1);
+      console.log(id, res, newV);
       connection.query(
-        "UPDATE employees SET title_id=? WHERE id=?",
-        [res.newTitle.split("-")[0], employees_Id],
+        `UPDATE employees SET role_id=${newV}
+        WHERE employees.id = ${id}`,
         (err, results) => {
           if (err) {
-            console.log(err);
+            console.log("what is the prob?");
           }
           mainMenu();
         }
